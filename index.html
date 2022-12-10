@@ -15,9 +15,30 @@
     </style>
   </head>
   <body>
+
     <ul id="messages"></ul>
+
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
+
+    <!-- connect socket.io to the client side -->
+    <!-- exposes endpoint in src, then connects -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      const form = document.getElementById('form');
+      const input = document.getElementById('input');
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value) { // if theres anything in the input text field...
+          socket.emit('chat msg', input.value);
+          input.value = '';
+        }
+      });
+    </script>
+
   </body>
 </html>
