@@ -28,3 +28,15 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg);
   });
 });
+
+// broadcasts to everybody but the sender (yourself)
+// io.on('connection', (socket) => {
+//   socket.broadcast.emit('hi');
+// });
+
+// broadcast to everyone including yourself
+io.on('connection', (socket) => {
+  socket.on('chat msg', (msg) => {
+    io.emit('chat msg', msg);
+  });
+});

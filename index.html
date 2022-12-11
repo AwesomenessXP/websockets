@@ -31,12 +31,21 @@
       const form = document.getElementById('form');
       const input = document.getElementById('input');
 
+      // add event that takes user input
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         if (input.value) { // if theres anything in the input text field...
-          socket.emit('chat msg', input.value);
-          input.value = '';
-        }
+          socket.emit('chat msg', input.value); // socket comes from client side
+          input.value = ''; // clear the input
+        }// if
+      });
+
+      // msg is a parameter that takes whatever is inside the message
+      socket.on('chat msg', function(msg) { 
+        let item = document.createElement('li');
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
       });
     </script>
 
